@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="game-panel">
+    <div class="top-bar" id="notify">
+        <div id="time">时间：</div>
+        <div id="score">分数：</div>
+        <div class="desc">操作： 左← 上↑ 右→ 下↓</div>
+    </div>
+    <div id="checkerboard">
+    </div>
+    <div class="bottom-bar">
+        <button id="play">开始</button>
+        <label for="difficulty">
+            模式：
+            <select name="模式选择" id="mode">
+                <option value="normal" selected>正常</option>
+                <option value="unlimited">无限</option>
+            </select>
+        </label>
+        <label for="difficulty">
+            难度：
+            <select name="难度选择" id="difficulty">
+                <option value="500" selected>初级</option>
+                <option value="200">中级</option>
+                <option value="100">高级</option>
+                <option value="20">终极</option>
+            </select>
+        </label>
+    </div>
+</div>
+<script src="index.js"></script>
+</body>
+</html>
