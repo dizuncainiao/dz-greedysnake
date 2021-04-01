@@ -132,6 +132,7 @@ class Snake {
 
     // 移除 棋盘可用的坐标 中 被 蛇占用的坐标
     updateCoordinates() {
+        // fixme 可用坐标 = 全部坐标 - 蛇占用的坐标
         this.snakeCoordinates.forEach(item => {
             const index = this.coordinates.findIndex(subItem => subItem === item)
             index > -1 && this.coordinates.splice(index, 1)
@@ -162,7 +163,7 @@ class Snake {
         const num = _.random(0, length - 1)
         const className = this.coordinates[num]
         if (!className) {
-            console.log(`随机数引起的Bug:`, this.coordinates, num)
+            console.log(`引起的Bug打印:`, this.coordinates, num)
         }
         const [x, y] = _.getCoordinate(className)
         this.foodCoordinate = [+x, +y]
