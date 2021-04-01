@@ -288,6 +288,16 @@ class GreedySnake {
                 location.reload()
             }
         })
+
+        // 空格开始
+        document.addEventListener('keydown', ({code}) => {
+            if (code === 'Space' && playBtn.innerText === '开始') {
+                this.snake.start(this.difficulty, this.mode)
+                playBtn.innerText = '重开'
+                difficultySelect.toggleAttribute('disabled')
+                modeSelect.toggleAttribute('disabled')
+            }
+        })
     }
 
     // 难度选择
