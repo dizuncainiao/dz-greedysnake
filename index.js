@@ -185,7 +185,7 @@ class Snake {
         const nextSnakeHeadClass = `S${x}_${y}`
         if (this.mode === 'normal' && this.snakeCoordinates.includes(nextSnakeHeadClass)) {
             clearInterval(this.timer)
-            this.overHandler('你撞到自己了，游戏结束')
+            this.overHandler('你撞到自己了，游戏结束😭')
         }
         // 删除老的蛇头坐标
         this.snakeCoordinates.pop()
@@ -200,7 +200,7 @@ class Snake {
         const condition = !_.inRange(x, [1, gridNum]) || !_.inRange(y, [1, gridNum])
         if (condition) {
             clearInterval(this.timer)
-            this.overHandler('你撞到边界了，游戏结束')
+            this.overHandler('你撞到边界了，游戏结束😭')
         } else {
             this.removeAll()
             this.draw()
@@ -236,6 +236,10 @@ class Snake {
             const className = `S${arr[0]}_${arr[1]}`
             return !snakeCoordinates.includes(className) && _.inRange(arr[0], [1, gridNum]) && _.inRange(arr[1], [1, gridNum])
         })
+        if (!result) {
+            clearInterval(this.timer)
+            this.overHandler('恭喜你触发隐藏Bug😁')
+        }
         this.snakeCoordinates.push(`S${result[0]}_${result[1]}`)
         this.updateCoordinates()
         this.draw()
