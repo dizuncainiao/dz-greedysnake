@@ -63,6 +63,10 @@
     background: #0037ff;
 }
 
+.snake.tail::after {
+    background: #7400d2;
+}
+
 .food::after {
     display: block;
     content: '';

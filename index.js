@@ -127,24 +127,38 @@ class Snake {
         for (let i = 0; i < 3; i++) {
             this.snakeCoordinates.push(`S${x}_${y - i}`)
         }
-        this.updateCoordinates()
+        // this.updateCoordinates()
     }
 
-    // 移除 棋盘可用的坐标 中 被 蛇占用的坐标
+    // 移除 棋盘可用的坐标 中 被 蛇占用的坐标 fixme 起初是为了避免食物生成在蛇身上，但该方法会引起 Bug，用 currentCoordinates 替代
     updateCoordinates() {
-        // fixme 可用坐标 = 全部坐标 - 蛇占用的坐标
+        // fixme 可用坐标 = 全部坐标 - 蛇占用的坐标（蛇每走过一个地方就移除可用坐标，可用坐标最终会清零）
         this.snakeCoordinates.forEach(item => {
             const index = this.coordinates.findIndex(subItem => subItem === item)
             index > -1 && this.coordinates.splice(index, 1)
         })
     }
 
+    // 在生成食物时，返回当前吃到食物时蛇占用的坐标
+    currentCoordinates () {
+        const cache = [...this.coordinates]
+        this.snakeCoordinates.forEach(item => {
+            const index = cache.findIndex(subItem => subItem === item)
+            index > -1 && cache.splice(index, 1)
+        })
+        return cache
+    }
+
     // 绘制蛇
     draw() {
+        const lastIndex = this.snakeCoordinates.length - 1
         this.snakeCoordinates.forEach((className, index) => {
             const snakeItem = document.querySelector(`.${className}`)
             if (index === 0) {
                 snakeItem.classList.add('head')
+            }
+            if (index === lastIndex) {
+                snakeItem.classList.add('tail')
             }
             !snakeItem.classList.contains('snake') && snakeItem.classList.add('snake')
         })
@@ -159,9 +173,12 @@ class Snake {
 
     // 生成食物（从可用的坐标中随机取一个）
     generateFood() {
-        const {length} = this.coordinates
+        // 允许使用的坐标
+        const allowedCoordinates = this.currentCoordinates()
+        const {length} = allowedCoordinates
         const num = _.random(0, length - 1)
-        const className = this.coordinates[num]
+        // const className = this.coordinates[num]
+        const className = allowedCoordinates[num]
         if (!className) {
             console.log(`引起的Bug打印:`, this.coordinates, num)
         }
@@ -242,10 +259,11 @@ class Snake {
         })
         if (!result) {
             clearInterval(this.timer)
-            this.overHandler('恭喜你触发隐藏Bug😁')
+            this.overHandler('恭喜你触发隐藏Bug😁，好吧这个可以避免的，你要让你的蛇尾周围有格子呀，不然它怎么生长呢？')
+            return
         }
         this.snakeCoordinates.push(`S${result[0]}_${result[1]}`)
-        this.updateCoordinates()
+        // this.updateCoordinates()
         this.draw()
         this.generateFood()
         this.setGameScore(false)
