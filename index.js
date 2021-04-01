@@ -140,7 +140,7 @@ class Snake {
     }
 
     // 在生成食物时，返回当前吃到食物时蛇占用的坐标
-    currentCoordinates () {
+    currentCoordinates() {
         const cache = [...this.coordinates]
         this.snakeCoordinates.forEach(item => {
             const index = cache.findIndex(subItem => subItem === item)
@@ -157,7 +157,9 @@ class Snake {
             if (index === 0) {
                 snakeItem.classList.add('head')
             }
-            if (index === lastIndex) {
+            if (index !== lastIndex) {
+                snakeItem.classList.contains('tail') && snakeItem.classList.remove('tail')
+            } else {
                 snakeItem.classList.add('tail')
             }
             !snakeItem.classList.contains('snake') && snakeItem.classList.add('snake')
