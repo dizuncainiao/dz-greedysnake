@@ -161,6 +161,9 @@ class Snake {
         const {length} = this.coordinates
         const num = _.random(0, length - 1)
         const className = this.coordinates[num]
+        if (!className) {
+            console.log(`随机数引起的Bug:`, this.coordinates, num)
+        }
         const [x, y] = _.getCoordinate(className)
         this.foodCoordinate = [+x, +y]
         document.querySelector('.food') && document.querySelector('.food').classList.remove('food')
