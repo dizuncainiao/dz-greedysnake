@@ -192,13 +192,28 @@ class Snake {
 
     // 蛇头下一个坐标
     nextSnakeHead([x, y]) {
+        const {gridNum, direction} = this
         const result = {
             ArrowUp: [x, y - 1],
             ArrowRight: [x + 1, y],
             ArrowDown: [x, y + 1],
             ArrowLeft: [x - 1, y]
         }
-        return result[this.direction]
+        if (this.mode === 'throughWall') {
+            if (x === 1 && direction === 'ArrowLeft') {
+                result.ArrowLeft = [gridNum, y]
+            }
+            if (x === gridNum && direction === 'ArrowRight') {
+                result.ArrowRight = [1, y]
+            }
+            if (y === 1 && direction === 'ArrowUp') {
+                result.ArrowUp = [x, gridNum]
+            }
+            if (y === gridNum && direction === 'ArrowDown') {
+                result.ArrowDown = [x, 1]
+            }
+        }
+        return result[direction]
     }
 
     // 更新蛇占用的坐标
@@ -224,7 +239,7 @@ class Snake {
     impactChecking() {
         const {snakeHead: [x, y], gridNum} = this
         const condition = !_.inRange(x, [1, gridNum]) || !_.inRange(y, [1, gridNum])
-        if (condition) {
+        if (['normal', 'unlimited'].includes(this.mode) && condition) {
             clearInterval(this.timer)
             this.overHandler('你撞到边界了，游戏结束😭')
         } else {
