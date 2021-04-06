@@ -206,7 +206,10 @@ class Snake {
         // 下一个蛇头坐标
         const [x, y] = this.nextSnakeHead(this.snakeHead)
         const nextSnakeHeadClass = `S${x}_${y}`
-        if (this.mode === 'normal' && this.snakeCoordinates.includes(nextSnakeHeadClass)) {
+        // 正常模式：不准撞自己，不准撞墙
+        // 无限模式：可以撞自己，不准撞墙
+        // 穿墙模式：不准撞自己，可以撞墙
+        if (['normal', 'throughWall'].includes(this.mode) && this.snakeCoordinates.includes(nextSnakeHeadClass)) {
             clearInterval(this.timer)
             this.overHandler('你撞到自己了，游戏结束😭')
         }
@@ -289,7 +292,7 @@ class GreedySnake {
     constructor(checkerboard, snake) {
         new checkerboard(checkerboardContainer, GRID_NUM)
         this.snake = new snake(GRID_NUM, this.gameOver)
-        this.mode = 'normal' // 游戏模式  正常模式normal|无限模式unlimited
+        this.mode = 'normal' // 游戏模式  正常模式normal|无限模式unlimited|穿墙模式throughWall
         this.difficulty = 500 // 游戏难度
         this.init()
     }
