@@ -132,7 +132,7 @@ class Snake {
 
     // 移除 棋盘可用的坐标 中 被 蛇占用的坐标 fixme 起初是为了避免食物生成在蛇身上，但该方法会引起 Bug，用 currentCoordinates 替代
     updateCoordinates() {
-        // fixme 可用坐标 = 全部坐标 - 蛇占用的坐标（蛇每走过一个地方就移除可用坐标，可用坐标最终会清零）
+        // fixme 可用坐标 = 全部坐标 - 蛇占用的坐标（蛇每走过一个地方就移除可用坐标，可用坐标最终会提前清零）
         this.snakeCoordinates.forEach(item => {
             const index = this.coordinates.findIndex(subItem => subItem === item)
             index > -1 && this.coordinates.splice(index, 1)
