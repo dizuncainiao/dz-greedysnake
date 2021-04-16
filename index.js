@@ -228,7 +228,7 @@ class Snake {
             clearInterval(this.timer)
             this.overHandler('你撞到自己了，游戏结束😭')
         }
-        // 删除老的蛇头坐标
+        // 删除蛇尾坐标
         this.snakeCoordinates.pop()
         // 加入新的蛇头坐标
         this.snakeCoordinates.unshift(nextSnakeHeadClass)
